@@ -1,0 +1,16 @@
+{
+  "package": "com.cleanroommc.renderflow.mixin",
+  "required": true,
+  "refmap": "mixins.renderflow.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8.5",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "server": [],
+  "client": [
+    "MinecraftMixin",
+    "ChunkRenderDispatcherMixin",
+    "SyncMixin",
+    "RenderGlobalMixin"
+  ]
+}
