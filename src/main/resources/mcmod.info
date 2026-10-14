@@ -1,4 +1,4 @@
-{
+[{
   "modid": "${mod_id}",
   "name": "${mod_name}",
   "description": "${mod_description}",
@@ -10,3 +10,4 @@
   "url": "${mod_url}",
   "updateUrl": "${mod_update_json}"
 }
+]
