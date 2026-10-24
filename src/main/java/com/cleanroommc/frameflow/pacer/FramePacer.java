@@ -1,6 +1,6 @@
-package com.cleanroommc.renderflow.pacer;
+package com.cleanroommc.frameflow.pacer;
 
-import com.cleanroommc.renderflow.config.ModConfig;
+import com.cleanroommc.frameflow.config.ModConfig;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -37,7 +37,7 @@ public class FramePacer {
      * Replaces LWJGL 2's Display.sync() to eliminate frametime jitter.
      */
     public static void sync(int fps) {
-        if (!ModConfig.FRAME_PACING.enableFramePacing || fps <= 0) {
+        if (!ModConfig.enableFramePacing || fps <= 0) {
             return;
         }
 
@@ -53,7 +53,7 @@ public class FramePacer {
 
         // If we are already past the target (a slow frame or a long stall), re-anchor the schedule
         // instead of incrementally advancing it. Otherwise the target drifts further into the past on
-        // every frame and pacing silently disables itself until the next >50ms spike.
+        // every frame and pacing silently disables itself until the next spike.
         if (remaining <= 0L) {
             nextFrameTargetNanos = now + frameIntervalNanos;
             return;
@@ -90,7 +90,7 @@ public class FramePacer {
     }
 
     public static boolean isChunkUploadBudgetExhausted() {
-        if (!ModConfig.FRAME_PACING.enableChunkUploadTimeSlicing) {
+        if (!ModConfig.enableChunkUploadTimeSlicing) {
             return false;
         }
         long elapsed = System.nanoTime() - chunkUploadStartNanos;

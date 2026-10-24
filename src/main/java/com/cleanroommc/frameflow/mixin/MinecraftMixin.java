@@ -1,11 +1,10 @@
-package com.cleanroommc.renderflow.mixin;
+package com.cleanroommc.frameflow.mixin;
 
-import com.cleanroommc.renderflow.config.ModConfig;
-import com.cleanroommc.renderflow.pacer.FramePacer;
+import com.cleanroommc.frameflow.config.ModConfig;
+import com.cleanroommc.frameflow.pacer.FramePacer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MinecraftMixin {
 
     @Inject(method = "runGameLoop", at = @At("HEAD"))
-    private void consistentframes$onFrameStart(CallbackInfo ci) {
+    private void frameflow$onFrameStart(CallbackInfo ci) {
         FramePacer.onFrameStart();
     }
 
@@ -25,10 +24,11 @@ public abstract class MinecraftMixin {
                     value = "INVOKE",
                     target = "Lorg/lwjgl/opengl/Display;sync(I)V",
                     remap = false
-            )
+            ),
+            require = 0
     )
-    private void consistentframes$wrapDisplaySync(int fps, Operation<Void> original) {
-        if (ModConfig.FRAME_PACING.enableFramePacing) {
+    private void frameflow$wrapDisplaySync(int fps, Operation<Void> original) {
+        if (ModConfig.enableFramePacing) {
             FramePacer.sync(fps);
         } else {
             original.call(fps);
@@ -41,12 +41,12 @@ public abstract class MinecraftMixin {
                     value = "INVOKE",
                     target = "Ljava/lang/Thread;yield()V",
                     remap = false
-            )
+            ),
+            require = 0
     )
-    private void consistentframes$wrapThreadYield(Operation<Void> original) {
-        if (!ModConfig.FRAME_PACING.eliminateThreadYield) {
+    private void frameflow$wrapThreadYield(Operation<Void> original) {
+        if (!ModConfig.eliminateThreadYield) {
             original.call();
         }
-        // When eliminateThreadYield is true, skip Thread.yield() to prevent OS scheduler descheduling jitter
     }
 }

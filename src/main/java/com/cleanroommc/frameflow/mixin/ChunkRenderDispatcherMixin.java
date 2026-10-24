@@ -1,6 +1,6 @@
-package com.cleanroommc.renderflow.mixin;
+package com.cleanroommc.frameflow.mixin;
 
-import com.cleanroommc.renderflow.pacer.FramePacer;
+import com.cleanroommc.frameflow.pacer.FramePacer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.renderer.chunk.ChunkRenderDispatcher;
@@ -20,8 +20,8 @@ public abstract class ChunkRenderDispatcherMixin {
     @Final
     private Queue<?> queueChunkUploads;
 
-    @Inject(method = "runChunkUploads", at = @At("HEAD"))
-    private void consistentframes$onStartChunkUploads(long finishTimeNano, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "runChunkUploads", at = @At("HEAD"), require = 0)
+    private void frameflow$onStartChunkUploads(long finishTimeNano, CallbackInfoReturnable<Boolean> cir) {
         FramePacer.startChunkUploadBatch();
     }
 
@@ -31,9 +31,10 @@ public abstract class ChunkRenderDispatcherMixin {
                     value = "INVOKE",
                     target = "Ljava/util/Queue;isEmpty()Z",
                     ordinal = 0
-            )
+            ),
+            require = 0
     )
-    private boolean consistentframes$timeSliceChunkUploads(Queue<?> queue, Operation<Boolean> original) {
+    private boolean frameflow$timeSliceChunkUploads(Queue<?> queue, Operation<Boolean> original) {
         // If time budget for this frame is exhausted, pretend the upload queue is empty to cleanly defer to next frame
         if (queue == this.queueChunkUploads && FramePacer.isChunkUploadBudgetExhausted()) {
             return true;
