@@ -1,13 +1,13 @@
-package com.cleanroommc.frameflow.core;
+package com.cleanroommc.renderflow.core;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 import java.util.Map;
 
-@IFMLLoadingPlugin.Name("FrameFlow")
+@IFMLLoadingPlugin.Name("RenderFlow")
 @IFMLLoadingPlugin.MCVersion("1.12.2")
 @IFMLLoadingPlugin.SortingIndex(1001)
-public class FrameFlowCorePlugin implements IFMLLoadingPlugin {
+public class RenderFlowCorePlugin implements IFMLLoadingPlugin {
 
     @Override
     public String[] getASMTransformerClass() {

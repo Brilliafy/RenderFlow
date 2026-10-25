@@ -1,6 +1,6 @@
-package com.cleanroommc.frameflow.pacer;
+package com.cleanroommc.renderflow.pacer;
 
-import com.cleanroommc.frameflow.config.ModConfig;
+import com.cleanroommc.renderflow.config.ModConfig;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

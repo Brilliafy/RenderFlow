@@ -1,4 +1,4 @@
-package com.cleanroommc.frameflow.config;
+package com.cleanroommc.renderflow.config;
 
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -6,7 +6,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Config(modid = "frameflow", name = "frameflow")
+@Config(modid = "renderflow", name = "renderflow")
 public class ModConfig {
 
     @Config.Comment("Replace erratic Display.sync() with a nanosecond-precision monotonic hybrid sleep-spin frame pacer.")
@@ -30,12 +30,12 @@ public class ModConfig {
         return (long) (chunkUploadBudgetMs * 1_000_000.0);
     }
 
-    @Mod.EventBusSubscriber(modid = "frameflow")
+    @Mod.EventBusSubscriber(modid = "renderflow")
     public static class ConfigSyncHandler {
         @SubscribeEvent
         public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-            if (event.getModID().equals("frameflow")) {
-                ConfigManager.sync("frameflow", Config.Type.INSTANCE);
+            if (event.getModID().equals("renderflow")) {
+                ConfigManager.sync("renderflow", Config.Type.INSTANCE);
             }
         }
     }
